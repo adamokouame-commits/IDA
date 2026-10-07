@@ -1,0 +1,6 @@
+{
+  "name": "Nova Native Hub",
+  "description": "Application mobile fluide avec navigation native modulaire, gestion d'état centralisée Redux Toolkit et authentification Firebase.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

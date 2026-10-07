@@ -1,0 +1,146 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with display info and preferences",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Auth UID of the user",
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name",
+          "maxLength": 80
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user",
+          "maxLength": 120
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Avatar URL or dynamic link",
+          "maxLength": 500
+        },
+        "bio": {
+          "type": "string",
+          "description": "Biography or status text",
+          "maxLength": 300
+        },
+        "location": {
+          "type": "string",
+          "description": "User location",
+          "maxLength": 100
+        },
+        "themePreference": {
+          "type": "string",
+          "description": "Preferred theme",
+          "enum": ["dark", "light", "system"]
+        },
+        "notificationsEnabled": {
+          "type": "boolean",
+          "description": "Whether push alerts are enabled"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp ISO"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp ISO"
+        }
+      },
+      "required": ["userId", "displayName", "email"]
+    },
+    "FeedItem": {
+      "title": "FeedItem",
+      "description": "A dynamic multimedia item/post with image url and tags",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique card identifier",
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the item",
+          "maxLength": 120
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Short description",
+          "maxLength": 300
+        },
+        "category": {
+          "type": "string",
+          "description": "Category tag",
+          "maxLength": 50
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "Image link",
+          "maxLength": 500
+        },
+        "authorId": {
+          "type": "string",
+          "description": "Owner UID",
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "authorName": {
+          "type": "string",
+          "description": "Author display name",
+          "maxLength": 80
+        },
+        "authorAvatar": {
+          "type": "string",
+          "description": "Author avatar URL",
+          "maxLength": 500
+        },
+        "likesCount": {
+          "type": "number",
+          "description": "Total likes"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp ISO"
+        }
+      },
+      "required": ["id", "title", "imageUrl", "authorId", "authorName"]
+    },
+    "UserBookmark": {
+      "title": "UserBookmark",
+      "description": "Saved item reference for a user",
+      "type": "object",
+      "properties": {
+        "itemId": {
+          "type": "string",
+          "description": "Referenced item id",
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "addedAt": {
+          "type": "string",
+          "description": "Timestamp ISO"
+        }
+      },
+      "required": ["itemId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Private profile document for each user"
+    },
+    "/users/{userId}/bookmarks/{itemId}": {
+      "schema": "UserBookmark",
+      "description": "User bookmarked item identifiers"
+    },
+    "/feed/{itemId}": {
+      "schema": "FeedItem",
+      "description": "Public feed items and cards with dynamic media links"
+    }
+  }
+}
